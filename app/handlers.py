@@ -15,7 +15,7 @@ async def cmd_start(message: Message):
 
 @router.message(Command('Help'))
 async def cmd_help(message: Message):
-    await message.answer('SOS нам нужна помощь здесь')
+    await message.answer('SOS нам нужна помощь здесь!')
 
 
 

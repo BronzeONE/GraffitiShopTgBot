@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from aiogram import Bot, Dispatcher, F
 
@@ -6,7 +7,7 @@ from app.handlers import router
 
 
 async def main():
-    bot = Bot(token="7554867601:AAG2vKwjk52YmUa52p3PW1vMrx0iB0DhfdM")
+    bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
     dp.include_router(router)
     await bot.delete_webhook(drop_pending_updates=True)
