@@ -13,3 +13,9 @@ catalog = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='краска', callback_data='paint')],
     [InlineKeyboardButton(text='всякое разное',callback_data='bandb')],
     [InlineKeyboardButton(text='маркеры',callback_data='markers')]])
+
+
+
+get_phonenuber = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='отправить номер',
+                                                               request_contact=True)]],
+                                                               resize_keyboard=True)
