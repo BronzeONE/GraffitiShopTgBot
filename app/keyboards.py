@@ -1,21 +1,42 @@
 from aiogram.types import (ReplyKeyboardMarkup, KeyboardButton, 
                            InlineKeyboardMarkup, InlineKeyboardButton)
 
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+from app.database.request import get_categories, get_category_item
+
 main = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text = 'каталог')],
                                      [KeyboardButton(text = 'корзина')],
                                      [KeyboardButton(text = 'контакты'),
                                      KeyboardButton(text = 'О нас')]],
                            resize_keyboard=True,
-                           input_field_placeholder='нажми на кнопку уже (.)(.)')
-
-
-catalog = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='краска', callback_data='paint')],
-    [InlineKeyboardButton(text='всякое разное',callback_data='bandb')],
-    [InlineKeyboardButton(text='маркеры',callback_data='markers')]])
+                           input_field_placeholder='нажми на кнопку')
 
 
 
-get_phonenuber = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='отправить номер',
-                                                               request_contact=True)]],
-                                                               resize_keyboard=True)
+
+#get_phonenuber = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='отправить номер',
+#                                                               request_contact=True)]],
+#                                                               resize_keyboard=True)
+
+
+
+async def categories():
+    all_categories = await get_categories()
+    keyboard = InlineKeyboardBuilder()
+    for category in all_categories:
+        keyboard.add(InlineKeyboardButton(text=category.name, callback_data=f"category_{category.id}"))
+    keyboard.add(InlineKeyboardButton(text='На глвную', callback_data="to main"))
+    return keyboard.adjust(2).as_markup()
+
+
+
+async def items(category_id):
+    all_items = await get_category_item(category_id)
+    keyboard = InlineKeyboardBuilder()
+    for item in all_items:
+        keyboard.add(InlineKeyboardButton(text=item.name, callback_data=f"item_{item.id}"))
+    keyboard.add(InlineKeyboardButton(text='На глвную', callback_data="to main"))
+    return keyboard.adjust(2).as_markup()
+
+
