@@ -17,6 +17,8 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger)
+    cart: Mapped[str] = mapped_column()
+
 
 class Category(Base):
     __tablename__ = 'categories'
@@ -30,12 +32,13 @@ class Item(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True) 
     name: Mapped[str] = mapped_column(String(25))
-    description: Mapped[str] =mapped_column(String(120))
-    price: Mapped[int] =mapped_column()
+    description: Mapped[str] = mapped_column(String(120))
+    price: Mapped[int]
     category: Mapped[int] = mapped_column(ForeignKey('categories.id'))
+    imagge_id: Mapped[str] = mapped_column(nullable=True)
 
 
-async def async_main():
+async def create_debil():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         

@@ -4,11 +4,11 @@ import os
 from aiogram import Bot, Dispatcher, F
 
 from app.handlers import router
-from app.database.models import async_main
+from app.database.models import create_debil
 
 
 async def main():
-    await async_main()
+    await create_debil()
     bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
     dp.include_router(router)
